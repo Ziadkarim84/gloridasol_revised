@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<title>Question-2</title>
+	<style>
+		td {
+			padding: .5vw;
+		}
+
+	</style>
+
+</head>
+
+<body onload="init()">
+	<h1>Question - 2</h1>
+
+	<table>
+		<p>
+			<tr>
+				<td>1) I <input type="text" id="question1"> <span id="result1"></span> (not/drink) any bear last night
+
+					She <input type="text" id="question2"> <span id="result2"></span> (get on) the bus in the center of the city
+
+					I <input type="text" id="question3"> <span id="result3"></span> (not/drink) any bear last night
+
+					she <input type="text" id="question4"> <span id="result4"></span> (get on) the bus in the center of the city</td>
+
+				<td><span class="button"><input type="submit" value="Check" onclick="check(1)"></span></td>
+			</tr>
+			<tr>
+				<td>[<span id="answer1">.</span>]</td>
+				<td><input type="submit" value="Show" onclick="show(1)"></td>
+			</tr>
+		</p>
+
+
+		<p>
+			<tr>
+				<td>2) She <input type="text" id="question5"> <span id="result5"></span> (get on) the bus in the center of the city
+
+					I <input type="text" id="question6"> <span id="result6"></span> (not/drink) any bear last night
+
+					She <input type="text" id="question7"> <span id="result7"></span> (get on) the bus in the center of the city</td>
+
+				<td><span class="button"><input type="submit" value="Check" onclick="check(2)"></span></td>
+			</tr>
+			<tr>
+				<td>[<span id="answer2">.</span>]</td>
+				<td><input type="submit" value="Show" onclick="show(2)"></td>
+			</tr>
+		</p>
+	</table>
+
+
+
+
+
+	<script>
+		function init() {
+			var numGaps = 7;
+			answers = new Array(numGaps);
+			answers[0] = "didn't drink";
+			answers[1] = "got on";
+			answers[2] = "didn't drink";
+			answers[3] = "got on";
+			answers[4] = "got on";
+			answers[5] = "didn't drink";
+			answers[6] = "got on";
+
+
+
+			var numQues = 2;
+			gapsPerQues = new Array(numQues);
+
+			for (i = 0; i < numQues; i++) {
+				gapsPerQues[i] = 1;
+			}
+
+			gapsPerQues[0] = 4;
+			gapsPerQues[1] = 3;
+
+
+
+
+
+
+
+			startQues = new Array(numQues);
+			var start = 0;
+			startQues[0] = 0;
+			for (i = 1; i < numQues; i++) {
+				start += gapsPerQues[i - 1];
+				startQues[i] = start;
+			}
+
+		}
+
+		function check(question_no) {
+			var start_no = startQues[question_no - 1];
+			start_no++;
+
+			for (i = start_no; i < start_no + gapsPerQues[question_no - 1]; i++) {
+
+				var ans = document.getElementById("question" + i.toString());
+
+				var result = document.getElementById("result" + i.toString());
+
+				if (ans.value.toLowerCase() == answers[i - 1].toLowerCase()) {
+
+					result.innerHTML = "✔";
+					result.style.color = "green";
+
+				} else {
+
+					result.innerHTML = "x";
+
+					result.style.color = "red";
+
+				}
+			}
+		}
+
+
+		function show(question_no) {
+
+			var ansbox = document.getElementById("answer" + question_no.toString());
+			var start_no = startQues[question_no - 1];
+			show_ans = answers[start_no];
+			if (gapsPerQues[question_no - 1] > 1) {
+				for (i = start_no + 1; i < start_no + gapsPerQues[question_no - 1]; i++) {
+					show_ans = show_ans + " / " + answers[i];
+				}
+			}
+
+			ansbox.innerHTML = show_ans;
+
+		}
+
+	</script>
+</body>
+
+</html>
